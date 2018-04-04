@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Memoizing previously computed values</title>
+    <script src="assert.js"></script>
+    <link rel="stylesheet" href="assert.css">
+</head>
+
+<body>
+
+    <ul id="results"></ul>
+
+    <script>
+        function isPrime(value) {
+            if (!isPrime.answers) {
+                isPrime.answers = {};
+            }
+
+            if (isPrime.answers[value] !== undefined) {
+                return isPrime.answers[value];
+            }
+
+            var prime = value !== 1; // 1 is not a prime
+
+            for(var i = 2; i < value; i++) {
+                if (value % i === 0) {
+                    prime = false;
+                    break;
+                }
+            }
+
+            return isPrime.answers[value] = prime;
+        }
+
+        assert(isPrime(5), "5 is prime!");
+        assert(isPrime.answers[5], "The answer was cached!");
+    </script>
+</body>
+
+</html>
